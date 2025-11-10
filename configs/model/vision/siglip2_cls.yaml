@@ -1,0 +1,13 @@
+vision_name: siglip2
+
+mm_projector:
+  _target_: src.models.llama_mapping.MultiModalProjector.from_pretrained
+  ckpt_path: ${paths.root_dir}/checkpoints/TIGER-Lab/Mantis-8B-siglip-llama3/multi_modal_projector.pth
+  finetuned: True
+
+embs_dir: ${paths.vidc_dir}/embs/google/siglip2-so400m-patch14-384_cls/
+
+vision_feature_select_strategy: cls
+max_frames: 100
+
+vision_flags: ${model.vision.vision_feature_select_strategy}-${model.vision.max_frames}frames

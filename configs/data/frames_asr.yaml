@@ -1,0 +1,19 @@
+prompt: frames_asr
+_target_: src.data.vidchapters_vision.VidChaptersVision
+
+subset: ${subset_train}
+captioner: HwwwH_MiniCPM-V-2
+captions: asr_s10k-2_train_preds+no-asr-10s
+
+prompter:
+    _target_: src.data.utils_frames_asr.PromptFramesASR
+
+    chapters:
+        _target_: src.data.utils_frames_asr.ChaptersFramesASR
+        embs_dir: ${model.vision.embs_dir}/${data.captioner}/${data.captions}/
+        vidc_dir: ${paths.vidc_dir}
+        subset: ${data.subset}
+        vision_feature_select_strategy: ${model.vision.vision_feature_select_strategy}
+        max_frames: ${model.vision.max_frames}
+
+data_flags: ${data.captions}

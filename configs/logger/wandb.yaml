@@ -1,0 +1,8 @@
+wandb_config:
+  project: 'ShardBlade' # wandb project name
+  entity: None # wandb entity name
+  job_type: None
+  tags: ${tags}
+  group: None
+  notes: None
+  mode: None

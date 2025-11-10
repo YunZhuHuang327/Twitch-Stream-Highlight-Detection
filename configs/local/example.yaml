@@ -1,0 +1,4 @@
+# @package _global_
+
+paths:
+  checkpoints_dir: path/to/checkpoints

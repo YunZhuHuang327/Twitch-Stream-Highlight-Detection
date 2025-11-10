@@ -1,0 +1,8 @@
+model_name: gemini-2.0-flash
+
+config_inference:
+  _target_: src.models.gemini_inference.GeminiInference
+  model_name: ${model.model_name} # gpt-4o-mini-2024-07-18
+
+subset: zero-shot
+model_flags: "default"

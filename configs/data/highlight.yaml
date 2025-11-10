@@ -1,0 +1,31 @@
+prompt: highlight
+_target_: src.data.highlight_data.HighlightDataModule
+
+subset: ${subset_train}
+data_flags: default
+
+# 数据集设置
+vidc_dir: ${paths.vidc_dir}
+train_subset: train
+val_subset: val
+
+# Highlight 特定设置
+highlight_types:
+  - exciting_moment
+  - funny_moment
+  - emotional_moment
+  - skill_showcase
+  - chat_peak
+
+# 聊天数据集成
+include_chat: true
+chat_window: 60  # 秒，用于汇总聊天
+
+# 数据加载设置
+batch_size: 1
+max_length: 2048  # 匹配模型的 context_length
+num_workers: 0  # Windows 上建议为 0
+
+# 窗口设置（用于长视频）
+window_size: 35000  # tokens
+window_overlap: 300  # 秒

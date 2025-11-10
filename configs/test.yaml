@@ -1,0 +1,42 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+defaults:
+  - _self_
+  - data: asr
+  - model: llama3.2_1B
+  - paths: default
+  - extras: default
+  - hydra: default
+  - logger: wandb
+  - test: default
+  - model/vision: null
+
+  # experiment configs allow for version control of specific hyperparameters
+  # e.g. best hyperparameters for given model and datamodule
+  - experiment: null
+
+  # optional local config for machine/user specific settings
+  # it's optional since it doesn't need to exist and is excluded from version control
+  - optional local: default
+
+  # debugging config (enable through command line, e.g. `python train.py debug=default)
+  - debug: null
+
+subset_train: sml1k_train
+subset_test: sml300_val
+
+# task name, determines output directory path
+task_name: "chapterize"
+run_type: test
+
+# tags to help you identify your experiments
+# you can overwrite this in experiment configs
+# overwrite from command line with `python train.py tags="[first_tag, second_tag]"`
+tags: ["dev"]
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: 42
+
+use_wandb: False

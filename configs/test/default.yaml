@@ -1,0 +1,9 @@
+_target_: src.test.vidchapters.VidChaptersTester
+
+save_dir: ${paths.output_dir}/test
+
+data:
+  _target_: src.data.vidchapters.VidChaptersData
+  prompter: ${data.prompter}
+
+  subset: ${subset_test}

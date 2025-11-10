@@ -1,0 +1,18 @@
+# path to root directory
+root_dir: "."
+
+# path to logging directory
+log_dir: ${paths.root_dir}/outputs/
+
+# path to output directory, created dynamically by hydra
+# use it to store all files generated during the run, like ckpts and metrics
+output_dir: ${paths.log_dir}/${task_name}/${model.model_name}/${data.prompt}/${data.data_flags}/${model.subset}/${model.model_flags}/
+
+# path to working directory
+work_dir: ${hydra:runtime.cwd}
+
+# path to VidChapters dataset directory
+vidc_dir: ${paths.root_dir}/dataset/
+
+# path to checkpoints directory
+checkpoints_dir: ${paths.root_dir}/checkpoints/

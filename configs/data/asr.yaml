@@ -1,0 +1,15 @@
+prompt: asr
+_target_: src.data.vidchapters.VidChaptersData
+
+subset: ${subset_train}
+
+prompter:
+    _target_: src.data.utils_asr.PromptASR
+
+    chapters:
+        _target_: src.data.utils_asr.ChaptersASR
+        vidc_dir: ${paths.vidc_dir}
+        subset: ${data.subset}
+
+data_flags: default
+

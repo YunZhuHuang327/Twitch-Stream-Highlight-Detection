@@ -1,0 +1,11 @@
+_target_: src.test.vidchapters_window.VidChaptersTesterWindow
+
+window_token_size: 15_000
+first_window_only: False
+save_dir: ${paths.output_dir}/test_window_${test.window_token_size}
+
+data:
+  _target_: src.data.vidchapters.VidChaptersData
+  prompter: ${data.prompter}
+
+  subset: ${subset_test}

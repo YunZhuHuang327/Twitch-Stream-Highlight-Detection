@@ -1,0 +1,86 @@
+subset_train: sml1k_train
+subset_test: null
+task_name: chapterize
+run_type: train
+tags:
+- dev
+seed: 42
+use_wandb: false
+data:
+  prompt: highlight
+  _target_: src.data.highlight_data.HighlightDataModule
+  subset: ${subset_train}
+  data_flags: default
+  vidc_dir: ${paths.vidc_dir}
+  train_subset: train
+  val_subset: val
+  highlight_types:
+  - exciting_moment
+  - funny_moment
+  - emotional_moment
+  - skill_showcase
+  - chat_peak
+  include_chat: true
+  chat_window: 60
+  batch_size: 1
+  max_length: 2048
+  num_workers: 0
+  window_size: 35000
+  window_overlap: 300
+model:
+  model_name: Llama-3.2-1B-Instruct
+  trainer:
+    _target_: src.models.llama_finetune.Trainer
+  config_train:
+    enable_fsdp: false
+    quantization: null
+    model_name: D:/chapter-llama/Llama-3.2-1B-Instruct
+    num_epochs: 1
+    run_validation: false
+    use_peft: false
+    peft_method: lora
+    r: 4
+    save_model: true
+    dist_checkpoint_root_folder: model_checkpoints
+    dist_checkpoint_folder: fine-tuned
+    fsdp_config.pure_bf16: true
+    output_dir: outputs/highlight_test/model
+    batching_strategy: padding
+    batch_size_training: 1
+    context_length: 4096
+    gradient_accumulation_steps: 1
+    gradient_clipping: true
+    gradient_clipping_threshold: 1.0
+    use_gradient_checkpointing: true
+    lr: 0.0001
+    save_metrics: true
+    use_wandb: ${use_wandb}
+    seed: ${seed}
+  config_inference:
+    _target_: src.models.llama_inference.LlamaInference
+    ckpt_path: ${model.config_train.model_name}
+    quantization: ${model.config_train.quantization}
+    use_fast_kernels: true
+    peft_model: ${paths.output_dir}/model_checkpoints/
+  subset: ${data.subset}
+  model_flags: default
+paths:
+  root_dir: .
+  log_dir: ${paths.root_dir}/outputs/
+  output_dir: outputs/highlight_test
+  work_dir: ${hydra:runtime.cwd}
+  vidc_dir: ${paths.root_dir}/dataset/
+  checkpoints_dir: ${paths.root_dir}/checkpoints/
+extras:
+  ignore_warnings: false
+  enforce_tags: true
+  print_config: true
+logger:
+  wandb_config:
+    project: ShardBlade
+    entity: None
+    job_type: None
+    tags: ${tags}
+    group: None
+    notes: None
+    mode: None

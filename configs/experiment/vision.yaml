@@ -1,0 +1,10 @@
+# @package _global_
+
+defaults:
+  - override /model: llama3.1_8B_vision
+  - override /model/vision: siglip
+  # - override /data: asr
+  # - override /data: frames_asr
+  - override /data: frames
+  - override /test: vision
+  - _self_

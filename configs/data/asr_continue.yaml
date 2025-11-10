@@ -1,0 +1,18 @@
+defaults:
+  - asr
+
+# 继续训练配置 - 包含原始数据 + 新的聊天数据
+prompt: asr
+_target_: src.data.vidchapters.VidChaptersData
+
+# 混合数据集：原始训练数据 + 新的聊天数据
+subset: sml1k_train+chat  # 自定义子集名称
+
+prompter:
+  _target_: src.data.utils_asr.PromptASR
+  chapters:
+    _target_: src.data.utils_asr.ChaptersASR
+    vidc_dir: ./dataset/
+    subset: ${data.subset}
+
+data_flags: "default"

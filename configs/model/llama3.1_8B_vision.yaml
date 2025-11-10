@@ -1,0 +1,40 @@
+llm_name: Meta-Llama-3.1-8B-Instruct
+model_name: ${model.llm_name}+${model.vision.vision_name}
+
+trainer:
+  _target_: src.models.llama_finetune_vision.Trainer
+  mm_projector: ${model.vision.mm_projector}
+
+config_train:
+  enable_fsdp: True 
+  quantization: Null # None, 8bit, 4bit
+  model_name: ${paths.checkpoints_dir}/meta-llama/${model.llm_name}/ # path to the model checkpoint
+  num_epochs: 1
+  run_validation: False 
+  use_peft: True
+  peft_method: lora 
+  save_model: True
+  dist_checkpoint_root_folder: model_checkpoints 
+  dist_checkpoint_folder: fine-tuned 
+  fsdp_config.pure_bf16: True
+  output_dir: ${paths.output_dir}/model_checkpoints/
+  batching_strategy: padding 
+  batch_size_training: 1 
+  context_length: 16384
+  lr: 1e-4
+  save_metrics: True 
+  use_wandb: ${use_wandb}
+  seed: ${seed}
+  mm_projector_finetuned: ${model.vision.mm_projector.finetuned}
+
+config_inference:
+  _target_: src.models.llama_inference_vision.LlamaInferenceVision
+  ckpt_path: ${model.config_train.model_name}
+  mm_projector_ckpt_path: ${model.vision.mm_projector.ckpt_path}
+  mm_projector_finetuned: ${model.vision.mm_projector.finetuned}
+  quantization: ${model.config_train.quantization}
+  use_fast_kernels: True
+  peft_model: ${paths.output_dir}/model_checkpoints/
+
+subset: ${data.subset}
+model_flags: ${model.vision.vision_flags}

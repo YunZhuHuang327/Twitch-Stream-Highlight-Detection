@@ -1,0 +1,9 @@
+# This is a zero-shot inference config
+
+defaults:
+  - llama3.1_8B
+
+config_inference:
+  peft_model: False
+
+subset: zero-shot

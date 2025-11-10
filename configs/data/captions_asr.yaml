@@ -1,0 +1,18 @@
+prompt: captions_asr
+_target_: src.data.vidchapters.VidChaptersData
+
+subset: ${subset_train}
+captioner: HwwwH_MiniCPM-V-2
+captions: asr_s10k-2_train_preds+no-asr-10s
+
+prompter:
+    _target_: src.data.utils_captions_asr.PromptCaptionsASR
+    merging_method: interleave
+    
+    chapters:
+        _target_: src.data.utils_captions_asr.ChaptersCaptionsASR
+        captions_dir: ${paths.vidc_dir}/captions/${data.captioner}/${data.captions}/
+        vidc_dir: ${paths.vidc_dir}
+        subset: ${data.subset}
+
+data_flags: ${data.captions}/

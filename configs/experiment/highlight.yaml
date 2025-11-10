@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - override /data: highlight
+  - override /model: llama3.2_1B_highlight
+  
+# Experiment 名称
+experiment: highlight_detection
+
+# 任务设置
+task:
+  name: highlight_detection
+  description: "Detect highlight moments in streaming videos with chat data"
+
+# 数据增强（可选）
+augmentation:
+  enabled: false
+  techniques: []
+
+# 评估设置
+evaluation:
+  metrics:
+    - precision
+    - recall
+    - f1
+    - mAP
+  iou_thresholds: [0.3, 0.5, 0.7]  # 用于计算 temporal IoU

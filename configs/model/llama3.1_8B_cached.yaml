@@ -1,0 +1,41 @@
+model_name: Meta-Llama-3.1-8B-Instruct
+
+trainer:
+  _target_: src.models.llama_finetune.Trainer
+
+config_train:
+  enable_fsdp: False  # Disabled for Windows single GPU
+  quantization: Null # None, 8bit, 4bit
+  # 使用 HuggingFace 缓存中的模型
+  model_name: meta-llama/Llama-3.1-8B-Instruct
+  num_epochs: 1 
+  run_validation: False 
+  use_peft: True
+  peft_method: lora
+  r: 4 # lora rank - 保持较小以适应 16GB GPU
+  save_model: True
+  dist_checkpoint_root_folder: model_checkpoints 
+  dist_checkpoint_folder: fine-tuned 
+  fsdp_config.pure_bf16: True
+  output_dir: ${paths.output_dir}/model_checkpoints/
+  batching_strategy: padding 
+  batch_size_training: 1 
+  context_length: 1024  # 8B 模型需要更小的 context length
+  gradient_accumulation_steps: 16  # 增加以补偿
+  gradient_clipping: True
+  gradient_clipping_threshold: 1.0
+  use_gradient_checkpointing: True
+  lr: 1e-4
+  save_metrics: True 
+  use_wandb: ${use_wandb}
+  seed: ${seed}
+
+config_inference:
+  _target_: src.models.llama_inference.LlamaInference
+  ckpt_path: meta-llama/Llama-3.1-8B-Instruct  # 会自动使用缓存
+  quantization: ${model.config_train.quantization}
+  use_fast_kernels: True
+  peft_model: ${paths.output_dir}/model_checkpoints/
+
+subset: ${data.subset}
+model_flags: "default"
