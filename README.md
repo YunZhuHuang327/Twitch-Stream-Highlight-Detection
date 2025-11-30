@@ -4,7 +4,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## 📋 專案簡介
 
@@ -203,6 +203,21 @@ python train.py \
 | GPT-4o-mini | 0.82 | 0.78 | 0.80 |
 | Llama 3.2-1B (fine-tuned) | 0.85 | 0.81 | 0.83 |
 | Llama 3.2-1B + Chat | 0.88 | 0.84 | 0.86 |
+
+## 📄 論文
+
+本專案的研究成果已整理成論文：
+
+**[Multimodal Fusion for Highlight Detection in Lifestyle Live Streams](./Multimodal_Fusion_for_Highlight_Detection_in_Lifestyle_Live_Streams.pdf)**
+
+### 摘要
+
+本研究提出了一個多模態融合框架，用於 Lifestyle 類型直播的精彩片段自動檢測。系統整合了：
+- 🎤 **語音模態**：透過 ASR 分析主播語音內容
+- 💬 **聊天模態**：分析觀眾互動模式與彈幕強度
+- 🎬 **視覺模態**：結合 VLM 進行場景理解
+
+實驗結果顯示，多模態融合方法相比單一模態有顯著提升。
 
 ## 🙏 致謝
 
