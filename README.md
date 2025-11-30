@@ -15,6 +15,12 @@
 
 自動識別長達 6-8 小時直播中的精彩時刻。
 
+## 📄 論文
+
+本專案的研究成果已整理成論文：
+
+**[Multimodal Fusion for Highlight Detection in Lifestyle Live Streams](./Multimodal_Fusion_for_Highlight_Detection_in_Lifestyle_Live_Streams.pdf)**
+
 ### ✨ 主要功能
 
 - **長影片處理**：支援 6-8 小時的長直播影片
@@ -204,11 +210,6 @@ python train.py \
 | Llama 3.2-1B (fine-tuned) | 0.85 | 0.81 | 0.83 |
 | Llama 3.2-1B + Chat | 0.88 | 0.84 | 0.86 |
 
-## 📄 論文
-
-本專案的研究成果已整理成論文：
-
-**[Multimodal Fusion for Highlight Detection in Lifestyle Live Streams](./Multimodal_Fusion_for_Highlight_Detection_in_Lifestyle_Live_Streams.pdf)**
 
 ### 摘要
 
@@ -235,11 +236,9 @@ python train.py \
 }
 ```
 
-## 📄 License
-
-MIT License - 詳見 [LICENSE](LICENSE) 文件
 
 ## 📧 聯絡方式
 
 如有問題或建議，歡迎提交 Issue 或 Pull Request。
+
 
