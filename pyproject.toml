@@ -1,0 +1,171 @@
+# --- Build System Definition ---
+[build-system]
+# Standard build system definition using setuptools
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+# --- Project Metadata and Dependencies (PEP 621) ---
+[project]
+# --- MANDATORY: Replace these placeholders ---
+name = "chapter-llama" #
+version = "0.1.0"
+description = "Chapter-Llama: Efficient Chaptering in Hour-Long Videos with LLMs"
+# --- Optional but Recommended ---
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+  { name="Lucas Ventura", email="lucas.ventura@gmail.com" },
+  { name="Antoine Yang" },
+  { name="Cordelia Schmid" },
+  { name="Gül Varol" },
+]
+
+# === Core Dependencies (Always Installed) ===
+dependencies = [
+    # --------- pytorch --------- #
+    # "torch",
+    # "torchvision",
+    "torchmetrics",
+    "lightning",
+
+    # --------- hydra --------- #
+    "hydra-core==1.3.2",
+    "hydra-colorlog==1.2.0",
+    # "hydra-optuna-sweeper==1.2.0",
+
+    # --------- llama-cookbook --------- #
+    "llama-cookbook",
+
+    # --------- loggers --------- #
+    "wandb",
+
+    # --------- others --------- #
+    "rich",
+    "lutils @ git+https://github.com/lucas-ventura/lutils.git",
+    "idr_torch @ git+https://github.com/idriscnrs/idr_torch.git",
+    "hf_transfer",
+
+    "pycocoevalcap",
+]
+
+# === Optional Dependencies (Extras) ===
+[project.optional-dependencies]
+# --- Inference Extra ---
+inference = [
+    # "whisperx",
+    "faster-whisper",
+    # "vllm",
+    # "timm==0.9.10",
+    # "decord",
+]
+
+# --- Gradio Extra ---
+demo = [
+    # "whisperx",
+    "faster-whisper",
+    "gradio",
+    "yt-dlp",
+]
+
+# --- Shot Detection Extra ---
+shot-detection = [
+    "scenedetect",
+]
+
+# --- Common Development ---
+dev = [
+    # Installs this package itself with specified extras + test deps
+    "chapter-llama[inference, shot-detection, test]", #
+    # Add common development tools (some configured below, list for install)
+    "black",
+    "ruff",
+    "mypy",
+    "ipython",
+    "coverage", # Needed if you run coverage checks
+    # Add other tools like pre-commit, bumpver, twine if you use them
+]
+
+# --- Optional: Project URLs ---
+[project.urls]
+Homepage = "https://github.com/lucas-ventura/chapter-llama" #
+Repository = "https://github.com/lucas-ventura/chapter-llama" #
+
+# === Script Entry Point ===
+[project.scripts]
+chapter = "inference:cli_entrypoint"
+
+
+# ===========================
+# === Tool Configurations ===
+# ===========================
+
+[tool.pytest.ini_options]
+addopts = [
+  "--color=yes",
+  "--durations=0",
+  "--strict-markers",
+  "--doctest-modules",
+]
+filterwarnings = [
+  "ignore::DeprecationWarning",
+  "ignore::UserWarning",
+]
+log_cli = "True"
+markers = [
+  "slow: slow tests",
+]
+minversion = "6.0"
+testpaths = "tests/"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: nocover",
+    "raise NotImplementedError",
+    "raise NotImplementedError()",
+    "if __name__ == .__main__.:",
+]
+
+
+[tool.ruff]
+extend-select = ["C4", "SIM", "TCH"]
+show-fixes = true
+target-version = "py39" # 
+
+extend-include = ["*.ipynb"]
+
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`) codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E4", "E7", "E9", "F", "B"]
+ignore = ["F401"] # Ignore unused imports
+
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+# Avoid trying to fix flake8-bugbear (`B`) violations.
+unfixable = ["B"]
+
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+# Ignore `E402` (import violations) in all `__init__.py` files, and in select subdirectories.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+"**/{tests,docs,tools}/*" = ["E402"]
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"

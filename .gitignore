@@ -1,0 +1,16 @@
+*.mp4
+*.log
+Llama-3.2-1B-Instruct/
+nul
+yt-dlp/
+.env
+*.pyc
+__pycache__/
+outputs/
+outputs-2/
+dataset/
+converted_chats/
+test_data/
+*.json
+!pyproject.toml
+path/

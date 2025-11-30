@@ -1,0 +1,30 @@
+torchmetrics
+lightning
+hydra-core==1.3.2
+hydra-colorlog==1.2.0
+llama-cookbook
+wandb
+rich
+lutils@ git+https://github.com/lucas-ventura/lutils.git
+idr_torch@ git+https://github.com/idriscnrs/idr_torch.git
+hf_transfer
+pycocoevalcap
+
+[demo]
+faster-whisper
+gradio
+yt-dlp
+
+[dev]
+chapter-llama[inference,shot-detection,test]
+black
+ruff
+mypy
+ipython
+coverage
+
+[inference]
+faster-whisper
+
+[shot-detection]
+scenedetect

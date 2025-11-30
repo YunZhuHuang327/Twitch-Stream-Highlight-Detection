@@ -1,0 +1,4 @@
+vllm
+timm==0.9.10
+decord
+git+https://github.com/lucas-ventura/lutils.git

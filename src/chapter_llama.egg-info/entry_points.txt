@@ -1,0 +1,2 @@
+[console_scripts]
+chapter = inference:cli_entrypoint
